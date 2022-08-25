@@ -4,7 +4,7 @@
 
 ## Building docker images
 * set VERSION as env var, for linux based
-    * `export VERSION=2`
+    * `export VERSION=1`
 * Run the docker build command<br>
     * `docker build -t fastapi_sample:${VERSION} .`
 

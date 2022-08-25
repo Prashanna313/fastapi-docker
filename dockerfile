@@ -1,4 +1,5 @@
 FROM python:3.8-slim
+LABEL Author="Prashanna" Description="Sample fastapi docker image"
 
 WORKDIR /code
 COPY setup.* /code/
