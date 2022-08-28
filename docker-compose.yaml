@@ -3,4 +3,4 @@ services:
   backend:
     image: "fastapi_sample:${VERSION}"
     ports:
-      - 8888:80
+      - 8000:80
