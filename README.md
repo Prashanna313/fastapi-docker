@@ -8,6 +8,9 @@
 * Run the docker build command<br>
     * `docker build -t fastapi_sample:${VERSION} .`
 
+## Deploying the container
+* This repo contains the `terraform` config for deploying `ECS task definition` & `ECS service`
+
 ## Accessing it locally
 * Once we've built the image, we can reference it in `backend` service defined in `docker-compose.yaml`
 * To start backend service, use
