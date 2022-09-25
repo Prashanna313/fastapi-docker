@@ -4,7 +4,7 @@ WORKDIR /code
 COPY setup.* /code/
 COPY src/ /code/src/
 
-RUN chmod 755 setup.sh &&\ 
+RUN chmod 755 setup.sh &&\
     ./setup.sh
 
 COPY src/fastapi_sample /code/app/
