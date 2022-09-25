@@ -2,10 +2,9 @@
 from unittest import TestCase
 
 from fastapi.testclient import TestClient
+from fastapi_sample.main import APP
 
-from fastapi_sample.main import app
-
-client = TestClient(app)
+client = TestClient(APP)
 
 class SuccessTests(TestCase):
     """Positive Test cases"""

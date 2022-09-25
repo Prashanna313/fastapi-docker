@@ -1,10 +1,10 @@
 """Sample FastAPI code"""
 from fastapi import FastAPI
 
-app = FastAPI()
+APP = FastAPI()
 
 
-@app.get("/items")
+@APP.get("/items")
 async def get_items():
     """
     Sample FastAPI method

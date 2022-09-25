@@ -1,0 +1,72 @@
+name: Docker image push
+
+on:
+  push:
+    branches: [ "master" ]
+
+env:
+  IMAGE_NAME: ${{ github.repository }}
+  REGISTRY: docker.io
+  SOURCE_DIR: src/
+  TESTS_DIR: tests/
+  # github.repository as <account>/<repo>
+
+
+jobs:
+  tests:
+    container:
+      image: python:3.8-slim-buster
+
+    permissions:
+      contents: read
+      packages: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Out Repo
+        uses: actions/checkout@v2
+
+      - name: Install dependencies 
+        run: pip install -e '.[build]'
+
+      - name: lint 
+        run: pylint src/
+
+      - name: unit_test 
+        run: pytest 
+
+  build:
+    needs: ["tests"]
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Out Repo 
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi_sample:latest
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
